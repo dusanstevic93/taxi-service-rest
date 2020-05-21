@@ -33,6 +33,4 @@ class AuthenticationServiceImpl implements AuthenticationService {
         String token = jwt.createToken(userDetails);
         return TOKEN_PREFIX + token;
     }
-    
-    
 }

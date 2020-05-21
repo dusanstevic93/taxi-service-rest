@@ -17,6 +17,5 @@ public class FormRideRequest {
     @Valid
     private LocationDto startingLocation;
     
-    private VehicleTypes vehicleType = VehicleTypes.CAR;
-    
+    private VehicleTypes vehicleType = VehicleTypes.CAR;  
 }

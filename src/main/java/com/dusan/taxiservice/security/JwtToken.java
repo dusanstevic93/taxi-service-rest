@@ -15,14 +15,15 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtToken {
 
-    @Value("${jwt.secret}")
     private String secret;
-    
-    @Value("${jwt.expiration}")
     private long expiration;
     
-    public String createToken(UserDetails userDetails) {
-        
+    public JwtToken(@Value("${jwt.secret}") String secret, @Value("${jwt.expiration}") long expiration) {
+        this.secret = secret;
+        this.expiration = expiration;
+    }
+    
+    public String createToken(UserDetails userDetails) {   
         String role = userDetails.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
@@ -37,12 +38,10 @@ public class JwtToken {
                         .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                         .compact();
         
-        return token;
-                        
+        return token;                       
     }
     
-    public boolean isValid(String token) {
-        
+    public boolean isValid(String token) {     
         try {
             getParser().parseClaimsJws(token);
             return true;
@@ -51,32 +50,26 @@ public class JwtToken {
         }
     }
     
-    private JwtParser getParser() {
-        
+    private JwtParser getParser() {     
         return Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes())).build();
-        
+                .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes())).build();      
     }
     
-    public String getUsername(String token) {
-        
+    public String getUsername(String token) {   
         String username = getParser()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
         
-        return username;
-            
+        return username;            
     }
     
-    public String getRole(String token) {
-        
+    public String getRole(String token) {    
         String role = (String)getParser()
                                 .parseClaimsJws(token)
                                 .getBody()
                                 .get("role");
         
-        return role;
-                
+        return role;             
     }
 }

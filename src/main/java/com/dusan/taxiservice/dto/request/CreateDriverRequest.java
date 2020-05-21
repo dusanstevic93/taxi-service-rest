@@ -11,6 +11,4 @@ public class CreateDriverRequest extends CreateUserRequest {
 
     @NotNull
     private Long vehicleId;
-    
-    
 }

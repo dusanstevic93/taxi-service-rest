@@ -28,6 +28,5 @@ public class UpdateUserProfileRequest {
     
     @Email
     @NotBlank
-    private String email;
-    
+    private String email;  
 }

@@ -25,5 +25,4 @@ public class LocationDto {
     @Max(180)
     @Digits(integer = 3, fraction = 8)
     private Double longitude;
-
 }

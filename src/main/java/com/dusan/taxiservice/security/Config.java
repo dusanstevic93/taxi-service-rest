@@ -20,8 +20,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class Config extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsService userDetailsService;
-    
+    private UserDetailsService userDetailsService;  
     private JwtToken jwtToken;
     
     @Override

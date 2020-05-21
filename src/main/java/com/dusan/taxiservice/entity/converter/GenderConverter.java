@@ -15,5 +15,4 @@ public class GenderConverter implements AttributeConverter<Gender, Character> {
     public Gender convertToEntityAttribute(Character dbData) {
         return Gender.fromCharacter(dbData);
     }
-
 }

@@ -45,5 +45,4 @@ public class DriverSpecification implements Specification<Driver> {
         
         return builder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
-
 }

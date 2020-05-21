@@ -49,6 +49,5 @@ public class RideQueryParams {
     
     public void setDateTo(LocalDate dateTo) {
         this.dateTo = dateTo.atStartOfDay();
-    }
-    
+    }  
 }

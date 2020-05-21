@@ -36,8 +36,6 @@ public class RoleRideSpecification implements Specification<Ride> {
         break;
         }
         
-        return p;
-        
+        return p;       
     }
-
 }

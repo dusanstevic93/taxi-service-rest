@@ -54,12 +54,6 @@ public class DispatcherRideSpecification extends GenericRideSpecification {
             predicates.add(p);
         }
         
-        return builder.and(predicates.toArray(new Predicate[predicates.size()]));
-            
+        return builder.and(predicates.toArray(new Predicate[predicates.size()]));          
     }
-    
-    
-
-    
-
 }

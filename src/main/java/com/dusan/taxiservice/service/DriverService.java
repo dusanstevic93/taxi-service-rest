@@ -16,6 +16,5 @@ public interface DriverService {
     Driver updateStatus(String username, DriverStatuses status);
     DriverStatuses getCurrentStatus(String username);
     List<DriverResponse> findAllDrivers(DriverQueryParams queryParams, PageParams pageParams);
-    List<UserProfileResponse> findAllVehicleDrivers(long vehicleId);
-    
+    List<UserProfileResponse> findAllVehicleDrivers(long vehicleId);  
 }

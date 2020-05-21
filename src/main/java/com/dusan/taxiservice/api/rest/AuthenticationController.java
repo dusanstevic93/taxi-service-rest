@@ -24,8 +24,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AuthenticationController {
 
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-    
+    private static final String AUTHORIZATION_HEADER = "Authorization";  
     private AuthenticationService authService;
     
     @Operation(summary = "Authenticate user", description = Descriptions.AUTHENTICATE,
@@ -33,7 +32,9 @@ public class AuthenticationController {
                          @ApiResponse(responseCode = "400", description = "Required field is missing or invalid"),
                          @ApiResponse(responseCode = "401", description = "Invalid username or password")})
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void authenticate(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+    public void authenticate(
+            @Valid @RequestBody LoginRequest loginRequest, 
+            HttpServletResponse response) {
         String token = authService.authenticate(loginRequest);
         response.setHeader(AUTHORIZATION_HEADER, token);
     }

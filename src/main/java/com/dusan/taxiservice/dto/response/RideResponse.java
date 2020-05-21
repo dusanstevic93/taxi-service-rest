@@ -23,6 +23,5 @@ public class RideResponse {
     private String dispatcher;
     private String client;
     private RideStatuses rideStatus;
-    private int rating;
-    
+    private int rating;   
 }

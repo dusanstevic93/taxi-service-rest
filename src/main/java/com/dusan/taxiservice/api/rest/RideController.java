@@ -49,7 +49,9 @@ public class RideController {
     
     @Operation(summary = "Retrieve user rides", description = Descriptions.RETRIEVE_USER_RIDES)
     @GetMapping(value = Mappings.RETRIEVE_USER_RIDES, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RideResponse> retrieveUserRides(@ParameterObject RideQueryParams queryParams, @ParameterObject RidePageParams pageParams, Authentication auth){
+    public List<RideResponse> retrieveUserRides(
+            @ParameterObject RideQueryParams queryParams, 
+            @ParameterObject RidePageParams pageParams, Authentication auth){
         String username = auth.getName();
         UserRoles role = getRole(auth.getAuthorities());
         return rideService.findAllRidesOfSpecificUser(username, role, queryParams, pageParams);
@@ -65,7 +67,9 @@ public class RideController {
     
     @Operation(summary = "Retrieve all rides", description = Descriptions.RETRIEVE_ALL_RIDES)
     @GetMapping(value = Mappings.RETRIEVE_ALL_RIDES, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RideResponse> retrieveAllRides(@ParameterObject RideQueryParams queryParams, @ParameterObject RidePageParams pageParams){
+    public List<RideResponse> retrieveAllRides(
+            @ParameterObject RideQueryParams queryParams, 
+            @ParameterObject RidePageParams pageParams){
         return rideService.findAllRides(queryParams, pageParams);
     }
     
@@ -157,8 +161,7 @@ public class RideController {
     @PutMapping(value = Mappings.ACCEPT_RIDE)
     public void acceptRide(
             @PathVariable long rideId,
-            Authentication auth
-            ) {
+            Authentication auth) {
         rideService.acceptRide(rideId, auth.getName());
     }
     
@@ -171,8 +174,7 @@ public class RideController {
     public void setFailedStatus(
             @PathVariable long rideId,
             @Valid @RequestBody CreateReportRequest report,
-            Authentication auth
-            ) {
+            Authentication auth) {
         rideService.setFailedStatus(rideId, auth.getName(), report);
     }
     
@@ -185,8 +187,7 @@ public class RideController {
     public void setSuccessfulStatus(
             @PathVariable long rideId,
             @Valid @RequestBody SuccessfulRideRequest successfulRideRequest,
-            Authentication auth
-            ) {
+            Authentication auth) {
         rideService.setSuccessfulStatus(rideId, auth.getName(), successfulRideRequest);
     }
 }

@@ -11,6 +11,5 @@ import lombok.Setter;
 public class DriverQueryParams {
 
     private VehicleTypes vehicleType;
-    private DriverStatuses driverStatus;
-    
+    private DriverStatuses driverStatus;  
 }

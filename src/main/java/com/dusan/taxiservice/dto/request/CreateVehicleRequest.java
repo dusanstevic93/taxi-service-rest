@@ -19,6 +19,5 @@ public class CreateVehicleRequest {
     private String licencePlate;
     
     @NotNull
-    private VehicleTypes type;
-    
+    private VehicleTypes type;  
 }

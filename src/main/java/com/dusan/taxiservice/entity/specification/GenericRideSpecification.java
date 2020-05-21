@@ -80,5 +80,4 @@ public class GenericRideSpecification implements Specification<Ride> {
         
         return builder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
-
 }

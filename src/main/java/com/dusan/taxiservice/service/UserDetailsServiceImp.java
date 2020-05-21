@@ -23,5 +23,4 @@ public class UserDetailsServiceImp implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return new UserDetailsImp(loginProjection);
     }
-
 }

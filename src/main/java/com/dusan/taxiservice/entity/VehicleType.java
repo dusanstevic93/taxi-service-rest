@@ -18,5 +18,4 @@ public class VehicleType {
     private long id;
     
     private String name;
-    
 }

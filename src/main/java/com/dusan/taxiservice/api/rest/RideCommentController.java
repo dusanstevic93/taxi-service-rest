@@ -32,16 +32,14 @@ public class RideCommentController {
     public void createComment(
             @PathVariable long rideId, 
             @RequestBody CreateCommentRequest createCommentRequest,
-            Authentication auth
-            ) {
+            Authentication auth) {
         commentService.createComment(rideId, auth.getName(), createCommentRequest);
     }
     
     @GetMapping(value = Mappings.RIDE_COMMENT, produces = MediaType.APPLICATION_JSON_VALUE)
     public CommentResponse getComment(
             @PathVariable long rideId,
-            Authentication auth
-            ) {
+            Authentication auth) {
         return commentService.findComment(rideId, auth.getName());
     }
 }
