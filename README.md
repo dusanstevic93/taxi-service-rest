@@ -1,1 +1,94 @@
-# taxi-service-rest
+# Project specification
+
+It's necessary to realize a Web application for a system that supports a taxi service. This application needs to use 3 types (roles) of users: **clients**, **dispatchers(admins)** and **drivers**. Application entities are described by the following data:
+
+- User
+  - Username (unique)
+  - Password
+  - First name
+  - Last name
+  - Gender
+  - Phone number
+  - Email
+  - Role
+- Driver (User)
+  - Location
+  - Vehicle
+  - Status (not working, on ride, waiting for ride)
+- Driver status:
+  - Not working (driver is not on shift)
+  - On ride (driver is on ride)
+  - Waiting for ride (driver is waiting for ride)
+- Client (User)
+- Dispatcher (User)
+- Location
+  - Latitude
+  - Longitude
+- Ride
+  - Date and time of the order
+  - Start location (location on which the taxi will arrive)
+  - Desired type of a vehicle (default type is car)
+  - Client which ordered ride (only if a client initiated the ride creation)
+  - Destination (location on which a ride is successfully finished, driver is responsible for updating this value)
+  - Dispatcher (a dispatcher that formed or processed the ride, if the driver was the one who accepted the ride, this field is  
+    empty)
+  - Driver (a driver that accepted the ride or to whom the ride was assigned by a dispatcher)
+  - Price
+  - Status (created, formed, processed, accepted, cancelled, failed, successful)
+  - Rating (value from 1 to 5, 0 value is interpreted as if a customer didn't rate a ride)
+- Vehicle
+  - Year of manufacturing
+  - Registration number
+  - Vehicle type (company has cars and vans in its service)
+- Comment
+  - Text
+  - Date of posting
+  - Client that posted the comment
+  - Ride on which a comment was posted
+- Report
+  - Text
+  - Date of posting
+  - Driver that created report
+  - Ride for which a report is written
+- Ride status
+  - Created (initial status of a ride when it's created by a client)
+  - Cancelled (ride that was in *Created* status and then a customer cancelled it for some reason)
+  - Formed (initial status of the ride when it's created by a dispatcher)
+  - Processed (ride that was in *Created* status and then a dispatcher assigned it to a driver)
+  - Accepted (ride that was in *Created* status and a driver self initiatively took it)
+  - Failed (ride that was in *Formed*, *Processed* or *Accepted* status, but a driver didn't successfully transported a customer)
+  - Successful (ride that was in *Formed*, *Processed* or *Accepted* status, and driver successfully transported a customer)
+
+Implement following functionalities:
+- Registration - clients are registered through login form.
+- Administrators (dispatchers) are read from a database and can't be added later. Drivers can be created only by dispatchers.
+- Login - user is logged in by providing username and password. User can performs activities that his role permits.
+- All users can see their profiles and change their personal data.
+- Drivers can change their current location.
+- Customer can order ride by providing starting location and vehicle type(optional). Status of a ride is *Created*.
+- Customer can change or cancel (ride status *Canceled*) ride as long as the ride is in *Created* status. Canceling the ride is an unavailable         functionality for a ride when it's formed by the dispatcher.
+- Admin (dispatcher) can form and process rides.
+  - When a dispatcher forms a ride, the following data needs to be provided:
+    - Location on which the taxi is coming,
+    - Vehicle type,
+    - Available driver which will be assigned to the ride,
+    - A dispatcher that formed the ride.
+  - If a customer orders ride and none of drivers accepted the ride, dispatcher can assign this ride to any of free drivers.
+- Driver can change the status of the ride to *Failed* or *Successful* status.
+  - If the driver changes the ride status to *Failed*, data for *Destination* and *Price* are not entered. When ride status is changed to *Failed*, the driver needs to write a report (to describe why the ride has failed).
+  -If the driver changes the status of the ride to *Successful*, data about the *Destination* and *Price* of the ride are entered.
+- When the ride ends customer can post a comment about the ride.
+- Customers can only see own rides.
+- Dispatchers can see a list of rides in which they participated. Also, they can see all the rides in the system.
+- Driver can see a list of rides in which they participated. Also, they can see all the rides in the system that are in *Created* status.
+- Filtering - User can filter rides by status of the ride.
+- Sorting - User can choose sorting by:
+  - Date (newest)
+  - Rating (from highest to lowest)
+- Search - User can search the rides by:
+  - Date of order (from, to, from - to)
+  - Rating (from, to, from - to)
+  - Price (from, to, from - to)
+- Search for rides that's available only to the Dispatchers
+  - by Name or Lastname of the driver
+  - by Name or Lastname of the customer
