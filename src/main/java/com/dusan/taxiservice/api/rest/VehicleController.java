@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dusan.taxiservice.api.docs.Descriptions;
-import com.dusan.taxiservice.api.docs.SecuritySchemeDefinition;
+import com.dusan.taxiservice.api.docs.OpenApiConfig;
 import com.dusan.taxiservice.dto.request.CreateVehicleRequest;
 import com.dusan.taxiservice.dto.request.PageParams;
 import com.dusan.taxiservice.dto.response.UserProfileResponse;
@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 @Tag(name = "Vehicle")
-@SecurityRequirement(name = SecuritySchemeDefinition.BEARER_TOKEN)
+@SecurityRequirement(name = OpenApiConfig.BEARER_TOKEN_SCHEME)
 @RestController
 @RequestMapping(Mappings.VEHICLE_BASE_PATH)
 @AllArgsConstructor

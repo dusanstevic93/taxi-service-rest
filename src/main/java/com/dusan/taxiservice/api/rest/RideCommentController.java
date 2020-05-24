@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dusan.taxiservice.api.docs.SecuritySchemeDefinition;
+import com.dusan.taxiservice.api.docs.OpenApiConfig;
 import com.dusan.taxiservice.dto.request.CreateCommentRequest;
 import com.dusan.taxiservice.dto.response.CommentResponse;
 import com.dusan.taxiservice.service.RideCommentService;
@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 @Tag(name = "Comment")
-@SecurityRequirement(name = SecuritySchemeDefinition.BEARER_TOKEN)
+@SecurityRequirement(name = OpenApiConfig.BEARER_TOKEN_SCHEME)
 @RestController
 @AllArgsConstructor
 public class RideCommentController {

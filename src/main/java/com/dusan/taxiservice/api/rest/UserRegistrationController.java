@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dusan.taxiservice.api.docs.Descriptions;
-import com.dusan.taxiservice.api.docs.SecuritySchemeDefinition;
+import com.dusan.taxiservice.api.docs.OpenApiConfig;
 import com.dusan.taxiservice.dto.request.CreateClientRequest;
 import com.dusan.taxiservice.dto.request.CreateDriverRequest;
 import com.dusan.taxiservice.service.UserRegistrationService;
@@ -40,7 +40,7 @@ public class UserRegistrationController {
         registrationService.registerClient(createClientRequest);
     }
     
-    @Operation(summary = "Create new driver", description = Descriptions.CREATE_DRIVER, security = @SecurityRequirement(name = SecuritySchemeDefinition.BEARER_TOKEN),
+    @Operation(summary = "Create new driver", description = Descriptions.CREATE_DRIVER, security = @SecurityRequirement(name = OpenApiConfig.BEARER_TOKEN_SCHEME),
             responses = {@ApiResponse(responseCode = "201", description = "Successful operation"),
                          @ApiResponse(responseCode = "400", description = "Required field is invalid or missing"),
                          @ApiResponse(responseCode = "404", description = "Vehicle not found"),
