@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import lombok.AccessLevel;
 import lombok.Setter;
 
 import lombok.Getter;
@@ -18,6 +19,7 @@ import lombok.Getter;
 @Setter
 public class RideComment {
 
+    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

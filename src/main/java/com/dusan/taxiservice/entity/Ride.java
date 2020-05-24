@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import lombok.AccessLevel;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
 import lombok.Getter;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @SelectBeforeUpdate(false)
 public class Ride {
 
+    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
