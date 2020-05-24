@@ -20,6 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -54,7 +55,7 @@ class UserRegistrationServiceImplTest {
         given(userRepository.existsByEmail(testRequest.getEmail())).willReturn(false);
         given(passwordEncoder.encode(testRequest.getPassword())).willReturn("encodedPassword");
         UserRole role = new UserRole();
-        role.setId(UserRoles.CLIENT.getId());
+        ReflectionTestUtils.setField(role, "id", UserRoles.CLIENT.getId());
         given(roleRepository.getOne(UserRoles.CLIENT.getId())).willReturn(role);
         given(userRepository.save(any())).willAnswer(invoker -> invoker.getArgument(0));
 
@@ -122,13 +123,13 @@ class UserRegistrationServiceImplTest {
         given(vehicleRepository.existsById(testRequest.getVehicleId())).willReturn(true);
         given(passwordEncoder.encode(testRequest.getPassword())).willReturn("encodedPassword");
         UserRole role = new UserRole();
-        role.setId(UserRoles.DRIVER.getId());
+        ReflectionTestUtils.setField(role, "id", UserRoles.DRIVER.getId());
         given(roleRepository.getOne(UserRoles.DRIVER.getId())).willReturn(role);
         DriverStatus status = new DriverStatus();
-        status.setId(DriverStatuses.NOT_WORKING.getId());
+        ReflectionTestUtils.setField(status, "id", DriverStatuses.NOT_WORKING.getId());
         given(driverStatusRepository.getOne(DriverStatuses.NOT_WORKING.getId())).willReturn(status);
         Vehicle vehicle = new Vehicle();
-        vehicle.setId(testRequest.getVehicleId());
+        ReflectionTestUtils.setField(vehicle, "id", testRequest.getVehicleId());
         given(vehicleRepository.getOne(testRequest.getVehicleId())).willReturn(vehicle);
         given(userRepository.save(any())).willAnswer(invoker -> invoker.getArgument(0));
 
