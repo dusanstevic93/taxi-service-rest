@@ -9,8 +9,8 @@ import com.dusan.taxiservice.entity.Vehicle;
 
 public interface VehicleService {
 
-    Vehicle createVehicle(CreateVehicleRequest createVehicleRequest);
+    VehicleResponse createVehicle(CreateVehicleRequest createVehicleRequest);
     VehicleResponse findVehicle(long id);
     List<VehicleResponse> findAllVehicles(PageParams pageParams);
-    Vehicle updateVehicle(long vehicleId, CreateVehicleRequest updateRequest);
+    VehicleResponse updateVehicle(long vehicleId, CreateVehicleRequest updateRequest);
 }

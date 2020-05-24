@@ -29,12 +29,13 @@ public class VehicleServiceImpl implements VehicleService {
     private ConversionService conversion;
     
     @Override
-    public Vehicle createVehicle(CreateVehicleRequest createVehicleRequest) {      
+    public VehicleResponse createVehicle(CreateVehicleRequest createVehicleRequest) {
         Vehicle vehicle = new Vehicle();
         vehicle.setProductionYear(createVehicleRequest.getProductionYear());
         vehicle.setLicencePlate(createVehicleRequest.getLicencePlate());
         vehicle.setVehicleType(vehicleTypeRepository.getOne(createVehicleRequest.getType().getId()));
-        return vehicleRepository.save(vehicle);
+        Vehicle createdVehicle = vehicleRepository.save(vehicle);
+        return conversion.convert(createdVehicle, VehicleResponse.class);
     }
 
     @Override
@@ -55,12 +56,13 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle updateVehicle(long vehicleId, CreateVehicleRequest updateRequest) {     
+    public VehicleResponse updateVehicle(long vehicleId, CreateVehicleRequest updateRequest) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new ResourceNotFoundException("vehicle not found"));
         vehicle.setProductionYear(updateRequest.getProductionYear());
         vehicle.setLicencePlate(updateRequest.getLicencePlate());
         vehicle.setVehicleType(vehicleTypeRepository.getOne(updateRequest.getType().getId()));
-        return vehicleRepository.save(vehicle);       
+        Vehicle updatedVehicle = vehicleRepository.save(vehicle);
+        return conversion.convert(updatedVehicle, VehicleResponse.class);
     }
 }
