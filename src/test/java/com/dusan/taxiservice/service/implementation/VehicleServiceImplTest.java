@@ -3,6 +3,7 @@ package com.dusan.taxiservice.service.implementation;
 import com.dusan.taxiservice.dao.VehicleRepository;
 import com.dusan.taxiservice.dao.VehicleTypeRepository;
 import com.dusan.taxiservice.dto.request.CreateVehicleRequest;
+import com.dusan.taxiservice.dto.request.PageParams;
 import com.dusan.taxiservice.dto.response.VehicleResponse;
 import com.dusan.taxiservice.entity.Vehicle;
 import com.dusan.taxiservice.entity.VehicleType;
@@ -16,8 +17,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,7 +68,6 @@ class VehicleServiceImplTest {
                 () -> assertEquals(testRequest.getProductionYear(), createdVehicle.getProductionYear()),
                 () -> assertEquals(testRequest.getType().getId(), createdVehicle.getVehicleType().getId())
         );
-
     }
 
     @Test
@@ -95,6 +100,59 @@ class VehicleServiceImplTest {
     @Test
     void testFindAllVehicles(){
 
+        // given
+        List<Vehicle> vehicleList = Arrays.asList(new Vehicle(), new Vehicle(), new Vehicle());
+        Page<Vehicle> vehiclePage = new PageImpl<>(vehicleList);
+        given(vehicleRepository.findAll(any(Pageable.class))).willReturn(vehiclePage);
+
+        // when
+        vehicleService.findAllVehicles(new PageParams());
+
+        // then
+        then(conversion).should(times(vehicleList.size())).convert(any(), eq(VehicleResponse.class));
+    }
+
+    @Test
+    void testUpdateVehicleShouldBeSuccessful(){
+        // given
+        CreateVehicleRequest updateRequest = getCreateVehicleRequestModel();
+        Vehicle vehicleToUpdate = getVehicleModel();
+        given(vehicleRepository.findById(vehicleToUpdate.getId())).willReturn(Optional.of(vehicleToUpdate));
+
+        VehicleType vehicleType = new VehicleType();
+        ReflectionTestUtils.setField(vehicleType, "id", updateRequest.getType().getId());
+        given(vehicleTypeRepository.getOne(updateRequest.getType().getId())).willReturn(vehicleType);
+
+        given(vehicleRepository.save(vehicleToUpdate)).willAnswer(invoker -> invoker.getArgument(0));
+
+        // when
+        vehicleService.updateVehicle(1L, updateRequest);
+
+        // then
+        ArgumentCaptor<Vehicle> argumentCaptor = ArgumentCaptor.forClass(Vehicle.class);
+        then(conversion).should().convert(argumentCaptor.capture(), eq(VehicleResponse.class));
+
+        Vehicle updatedVehicle = argumentCaptor.getValue();
+
+        assertAll(
+                () -> assertEquals(updateRequest.getLicencePlate(), updatedVehicle.getLicencePlate()),
+                () -> assertEquals(updateRequest.getProductionYear(), updatedVehicle.getProductionYear()),
+                () -> assertEquals(updateRequest.getType().getId(), updatedVehicle.getVehicleType().getId())
+        );
+    }
+
+    @Test
+    void  testUpdateVehicleNotFound(){
+        // given
+        long vehicleId = 1L;
+        CreateVehicleRequest updateRequest = getCreateVehicleRequestModel();
+        given(vehicleRepository.findById(vehicleId)).willReturn(Optional.empty());
+
+        // when
+        Executable attemptUpdate = () -> vehicleService.updateVehicle(vehicleId, updateRequest);
+
+        // then
+        assertThrows(ResourceNotFoundException.class, attemptUpdate);
     }
 
     private CreateVehicleRequest getCreateVehicleRequestModel(){
