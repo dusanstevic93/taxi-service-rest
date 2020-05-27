@@ -76,11 +76,15 @@ class ClientRideRequestProcessor {
     
     public RideResponse rateRide(long rideId, String clientUsername, int rating) {
         Ride ride = findRide(rideId, clientUsername);
-        if (ride.getRating() != 0)
-            throw new ConflictException("Ride is already rated");
+        checkIfRideIsAlreadyRated(ride);
         ride.setRating(rating);
         Ride ratedRide = rideRepository.save(ride);
         return conversion.convert(ratedRide, RideResponse.class);
+    }
+
+    private void checkIfRideIsAlreadyRated(Ride ride){
+        if (ride.getRating() != 0)
+            throw new ConflictException("Ride is already rated");
     }
     
     private Ride findRide(long rideId, String clientUsername) {
