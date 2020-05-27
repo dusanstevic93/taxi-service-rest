@@ -1,4 +1,4 @@
-package com.dusan.taxiservice.service;
+package com.dusan.taxiservice.service.implementation;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
