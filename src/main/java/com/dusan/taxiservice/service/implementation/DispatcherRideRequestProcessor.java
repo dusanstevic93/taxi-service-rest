@@ -32,10 +32,9 @@ class DispatcherRideRequestProcessor {
     private DriverRepository driverRepository;
     private VehicleTypeRepository vehicleTypeRepository;
     private DispatcherRepository dispatcherRepository;
-    private ConversionService conversion;
     
     
-    public RideResponse formRide(String dispatcherUsername, String driverUsername, FormRideRequest formRideRequest) {
+    public void formRide(String dispatcherUsername, String driverUsername, FormRideRequest formRideRequest) {
         Driver driver = findDriver(driverUsername);
         checkDriverStatus(driver.getStatus().getId());
         long driverVehicleTypeId = driver.getVehicle().getId();
@@ -49,11 +48,10 @@ class DispatcherRideRequestProcessor {
         ride.setDispatcher(dispatcherRepository.getOne(dispatcherUsername));
         ride.setDriver(driver);
         ride.setRideStatus(rideStatusRepository.getOne(RideStatuses.FORMED.getId()));      
-        Ride formedRide = rideRepository.save(ride); 
-        return conversion.convert(formedRide, RideResponse.class);
+        rideRepository.save(ride);
     }
     
-    public RideResponse processRide(long rideId, String dispatcherUsername, String driverUsername) {
+    public void processRide(long rideId, String dispatcherUsername, String driverUsername) {
         Ride ride = findRide(rideId);     
         if (ride.getRideStatus().getId() != RideStatuses.CREATED.getId())
             throw new ConflictException("Ride not in created status");
@@ -66,8 +64,7 @@ class DispatcherRideRequestProcessor {
         ride.setDispatcher(dispatcherRepository.getOne(dispatcherUsername));
         ride.setDriver(driver);
         ride.setRideStatus(rideStatusRepository.getOne(RideStatuses.PROCESSED.getId()));
-        Ride processedRide = rideRepository.save(ride);
-        return conversion.convert(processedRide, RideResponse.class);
+        rideRepository.save(ride);
     }
     
     private Ride findRide(long rideId) {

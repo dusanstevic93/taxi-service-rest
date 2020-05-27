@@ -33,69 +33,61 @@ class RideServiceImp implements RideService {
     
     
     @Override
-    public RideResponse createRide(String clientUsername, CreateRideRequest createRideRequest) {
-        return clientRequestProcessor.createRide(clientUsername, createRideRequest);       
+    public void createRide(String clientUsername, CreateRideRequest createRideRequest) {
+        clientRequestProcessor.createRide(clientUsername, createRideRequest);
     }
 
     @Override
     @Transactional
-    public RideResponse updateRide(long rideId, String clientUsername, CreateRideRequest updateRideRequest) {
-        return clientRequestProcessor.updateRide(rideId, clientUsername, updateRideRequest);   
+    public void updateRide(long rideId, String clientUsername, CreateRideRequest updateRideRequest) {
+        clientRequestProcessor.updateRide(rideId, clientUsername, updateRideRequest);
     }
 
     @Override
     @Transactional
-    public RideResponse cancelRide(long rideId, String clientUsername) {
-        RideResponse canceledRide = clientRequestProcessor.cancelRide(rideId, clientUsername);
-        return canceledRide;
+    public void cancelRide(long rideId, String clientUsername) {
+        clientRequestProcessor.cancelRide(rideId, clientUsername);
     }
     
     @Override
-    public RideResponse rateRide(long rideId, String clientUsername, int rating) {
-        RideResponse ratedRide = clientRequestProcessor.rateRide(rideId, clientUsername, rating);
-        return ratedRide;
+    public void rateRide(long rideId, String clientUsername, int rating) {
+        clientRequestProcessor.rateRide(rideId, clientUsername, rating);
     }
 
     @Override
     @Transactional
-    public RideResponse formRide(String dispatcherUsername, String driverUsername, FormRideRequest formRideRequest) {
-        RideResponse formedRide = dispatcherRequestProcessor.formRide(dispatcherUsername, driverUsername, formRideRequest);
+    public void formRide(String dispatcherUsername, String driverUsername, FormRideRequest formRideRequest) {
+        dispatcherRequestProcessor.formRide(dispatcherUsername, driverUsername, formRideRequest);
         driverService.updateStatus(driverUsername, DriverStatuses.ON_RIDE);
-        return formedRide;
     }
 
     @Override
     @Transactional
-    public RideResponse processRide(long rideId, String dispatcherUsername, String driverUsername) {
-        RideResponse processedRide = dispatcherRequestProcessor.processRide(rideId, dispatcherUsername, driverUsername);
+    public void processRide(long rideId, String dispatcherUsername, String driverUsername) {
+        dispatcherRequestProcessor.processRide(rideId, dispatcherUsername, driverUsername);
         driverService.updateStatus(driverUsername, DriverStatuses.ON_RIDE);
-        return processedRide;
     }
 
     @Override
     @Transactional
-    public RideResponse acceptRide(long rideId, String driverUsername) {
-        RideResponse acceptedRide = driverRequestProcessor.acceptRide(rideId, driverUsername);
+    public void acceptRide(long rideId, String driverUsername) {
+        driverRequestProcessor.acceptRide(rideId, driverUsername);
         driverService.updateStatus(driverUsername, DriverStatuses.ON_RIDE);
-        return acceptedRide;
-        
     }
 
     @Override
     @Transactional
-    public RideResponse setFailedStatus(long rideId, String driverUsername, CreateReportRequest report) {
-        RideResponse failedRide = driverRequestProcessor.setFailedStatus(rideId, driverUsername);
+    public void setFailedStatus(long rideId, String driverUsername, CreateReportRequest report) {
+        driverRequestProcessor.setFailedStatus(rideId, driverUsername);
         reportService.createReport(rideId, driverUsername, report);
         driverService.updateStatus(driverUsername, DriverStatuses.WAITING_FOR_RIDE);
-        return failedRide;
     }
 
     @Override
     @Transactional
-    public RideResponse setSuccessfulStatus(long rideId, String driverUsername, SuccessfulRideRequest successfulRideRequest) {
-        RideResponse successfulRide = driverRequestProcessor.setSuccessfulStatus(rideId, driverUsername, successfulRideRequest);
+    public void setSuccessfulStatus(long rideId, String driverUsername, SuccessfulRideRequest successfulRideRequest) {
+        driverRequestProcessor.setSuccessfulStatus(rideId, driverUsername, successfulRideRequest);
         driverService.updateStatus(driverUsername, DriverStatuses.WAITING_FOR_RIDE);
-        return successfulRide;
     }
 
     @Override

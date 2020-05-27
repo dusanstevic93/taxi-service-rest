@@ -16,6 +16,7 @@ import com.dusan.taxiservice.exception.UsernameExistsException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -57,12 +58,15 @@ class UserRegistrationServiceImplTest {
         UserRole role = new UserRole();
         ReflectionTestUtils.setField(role, "id", UserRoles.CLIENT.getId());
         given(roleRepository.getOne(UserRoles.CLIENT.getId())).willReturn(role);
-        given(userRepository.save(any())).willAnswer(invoker -> invoker.getArgument(0));
 
         // when
-        Client registeredClient = userRegistrationService.registerClient(testRequest);
+        userRegistrationService.registerClient(testRequest);
 
         // then
+        ArgumentCaptor<Client> argumentCaptor = ArgumentCaptor.forClass(Client.class);
+        then(userRepository).should().save(argumentCaptor.capture());
+        Client registeredClient = argumentCaptor.getValue();
+
         assertAll(
                 () -> assertEquals(testRequest.getUsername(), registeredClient.getUsername()),
                 () -> assertEquals("encodedPassword", registeredClient.getPassword()),
@@ -131,12 +135,15 @@ class UserRegistrationServiceImplTest {
         Vehicle vehicle = new Vehicle();
         ReflectionTestUtils.setField(vehicle, "id", testRequest.getVehicleId());
         given(vehicleRepository.getOne(testRequest.getVehicleId())).willReturn(vehicle);
-        given(userRepository.save(any())).willAnswer(invoker -> invoker.getArgument(0));
 
         // when
-        Driver registeredDriver = userRegistrationService.registerDriver(testRequest);
+        userRegistrationService.registerDriver(testRequest);
 
         // then
+        ArgumentCaptor<Driver> argumentCaptor = ArgumentCaptor.forClass(Driver.class);
+        then(userRepository).should().save(argumentCaptor.capture());
+        Driver registeredDriver = argumentCaptor.getValue();
+
         assertAll(
                 () -> assertEquals(testRequest.getUsername(), registeredDriver.getUsername()),
                 () -> assertEquals("encodedPassword", registeredDriver.getPassword()),

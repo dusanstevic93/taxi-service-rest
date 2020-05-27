@@ -2,7 +2,6 @@ package com.dusan.taxiservice.service.implementation;
 
 import java.time.LocalDateTime;
 
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import com.dusan.taxiservice.dao.ClientRepository;
@@ -10,7 +9,6 @@ import com.dusan.taxiservice.dao.RideRepository;
 import com.dusan.taxiservice.dao.RideStatusRepository;
 import com.dusan.taxiservice.dao.VehicleTypeRepository;
 import com.dusan.taxiservice.dto.request.CreateRideRequest;
-import com.dusan.taxiservice.dto.response.RideResponse;
 import com.dusan.taxiservice.entity.Client;
 import com.dusan.taxiservice.entity.Location;
 import com.dusan.taxiservice.entity.Ride;
@@ -29,10 +27,9 @@ class ClientRideRequestProcessor {
     private RideStatusRepository rideStatusRepository;
     private VehicleTypeRepository vehicleTypeRepository;
     private ClientRepository clientRepository;
-    private ConversionService conversion;
     
 
-    public RideResponse createRide(String clientUsername, CreateRideRequest createRideRequest) {
+    public void createRide(String clientUsername, CreateRideRequest createRideRequest) {
         checkIfClientAlreadyCreatedRide(clientUsername);
         Ride ride = new Ride();         
         ride.setCreationDateTime(LocalDateTime.now());
@@ -40,8 +37,7 @@ class ClientRideRequestProcessor {
         ride.setVehicleType(vehicleTypeRepository.getOne(createRideRequest.getVehicleType().getId()));
         ride.setClient(clientRepository.getOne(clientUsername));
         ride.setRideStatus(rideStatusRepository.getOne(RideStatuses.CREATED.getId()));
-        Ride createdRide = rideRepository.save(ride);
-        return conversion.convert(createdRide, RideResponse.class);
+        rideRepository.save(ride);
     }
     
     private void checkIfClientAlreadyCreatedRide(String clientUsername) {
@@ -52,21 +48,19 @@ class ClientRideRequestProcessor {
             throw new ConflictException("Client has already created ride");
     }
 
-    public RideResponse updateRide(long rideId, String clientUsername, CreateRideRequest updateRideRequest) {
+    public void updateRide(long rideId, String clientUsername, CreateRideRequest updateRideRequest) {
         Ride ride = findRide(rideId, clientUsername);      
         checkStatus(ride.getRideStatus().getId());
         ride.setStartingLocation(new Location(updateRideRequest.getStartingLocation().getLatitude(), updateRideRequest.getStartingLocation().getLongitude()));
         ride.setVehicleType(vehicleTypeRepository.getOne(updateRideRequest.getVehicleType().getId()));       
-        Ride updatedRide = rideRepository.save(ride);
-        return conversion.convert(updatedRide, RideResponse.class);
+        rideRepository.save(ride);
     }
 
-    public RideResponse cancelRide(long rideId, String clientUsername) {
+    public void cancelRide(long rideId, String clientUsername) {
         Ride ride = findRide(rideId, clientUsername);     
         checkStatus(ride.getRideStatus().getId());    
         ride.setRideStatus(rideStatusRepository.getOne(RideStatuses.CANCELED.getId()));     
-        Ride canceledRide = rideRepository.save(ride); 
-        return conversion.convert(canceledRide, RideResponse.class);
+        rideRepository.save(ride);
     }
     
     private void checkStatus(long statusId) {
@@ -74,12 +68,11 @@ class ClientRideRequestProcessor {
             throw new ConflictException("Ride not in created status");
     }
     
-    public RideResponse rateRide(long rideId, String clientUsername, int rating) {
+    public void rateRide(long rideId, String clientUsername, int rating) {
         Ride ride = findRide(rideId, clientUsername);
         checkIfRideIsAlreadyRated(ride);
         ride.setRating(rating);
-        Ride ratedRide = rideRepository.save(ride);
-        return conversion.convert(ratedRide, RideResponse.class);
+        rideRepository.save(ride);
     }
 
     private void checkIfRideIsAlreadyRated(Ride ride){

@@ -7,6 +7,6 @@ import com.dusan.taxiservice.entity.Driver;
 
 public interface UserRegistrationService {
 
-    Client registerClient(CreateClientRequest createClientRequest);
-    Driver registerDriver(CreateDriverRequest createDriverRequest);
+    void registerClient(CreateClientRequest createClientRequest);
+    void registerDriver(CreateDriverRequest createDriverRequest);
 }

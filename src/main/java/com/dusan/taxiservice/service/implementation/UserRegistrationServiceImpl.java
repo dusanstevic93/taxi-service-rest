@@ -32,18 +32,18 @@ class UserRegistrationServiceImpl implements UserRegistrationService {
     private PasswordEncoder passwordEncoder;
     
     @Override
-    public Client registerClient(CreateClientRequest createClientRequest) {
+    public void registerClient(CreateClientRequest createClientRequest) {
         checkUsernameAndEmailUniqueness(createClientRequest.getUsername(), createClientRequest.getEmail());
         Client client = new Client(true);
         BeanUtils.copyProperties(createClientRequest, client, "password");
         String encodedPassword = passwordEncoder.encode(createClientRequest.getPassword());
         client.setPassword(encodedPassword);
         client.setRole(roleRepository.getOne(UserRoles.CLIENT.getId()));
-        return userRepository.save(client);        
+        userRepository.save(client);
     }
 
     @Override
-    public Driver registerDriver(CreateDriverRequest createDriverRequest) {
+    public void registerDriver(CreateDriverRequest createDriverRequest) {
         checkUsernameAndEmailUniqueness(createDriverRequest.getUsername(), createDriverRequest.getEmail());
         checkIfVehicleExists(createDriverRequest.getVehicleId());
         Driver driver = new Driver(true);
@@ -53,7 +53,7 @@ class UserRegistrationServiceImpl implements UserRegistrationService {
         driver.setRole(roleRepository.getOne(UserRoles.DRIVER.getId()));
         driver.setStatus(driverStatusRepository.getOne(DriverStatuses.NOT_WORKING.getId()));
         driver.setVehicle(vehicleRepository.getOne(createDriverRequest.getVehicleId()));
-        return userRepository.save(driver);      
+        userRepository.save(driver);
     }
     
     private void checkIfVehicleExists(long vehicleId) {
