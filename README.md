@@ -88,3 +88,15 @@ Implement following functionalities:
 - Search criteria for rides that's available only for dispatchers
   - by name or lastname of the driver
   - by name or lastname of the client
+  
+## Users:
+
+- Dispatcher:
+  - Username: dispatcherTest
+  - Password: password
+- Driver:
+  - Username: driverTest
+  - Password: password
+- Client:
+  - Username: dusan93
+  - Password: password
