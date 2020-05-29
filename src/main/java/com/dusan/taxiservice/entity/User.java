@@ -27,34 +27,34 @@ import lombok.Setter;
 @Table(name = "user_info")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User implements Persistable<String> {
-	
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Transient
     boolean isNew;
-    
-	@Id
-	private String username;
-	
-	private String password;
-	
-	protected String firstName;
-	
-	private String lastName;
-	
-	@Convert(converter = GenderConverter.class)
-	private Gender gender;
-	
-	private String phone;
-	
-	private String email;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private UserRole role;
-	
-	public User(boolean isNew) {
-	    this.isNew = isNew;
-	}
+
+    @Id
+    private String username;
+
+    private String password;
+
+    protected String firstName;
+
+    private String lastName;
+
+    @Convert(converter = GenderConverter.class)
+    private Gender gender;
+
+    private String phone;
+
+    private String email;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserRole role;
+
+    public User(boolean isNew) {
+        this.isNew = isNew;
+    }
 
     @Override
     public String getId() {
