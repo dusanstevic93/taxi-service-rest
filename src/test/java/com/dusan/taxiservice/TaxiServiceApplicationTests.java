@@ -3,10 +3,10 @@ package com.dusan.taxiservice;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class TaxiServiceApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 
