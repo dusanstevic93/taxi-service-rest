@@ -26,14 +26,13 @@ class RideReportServiceImpl implements RideReportService {
     private ConversionService conversion;
     
     @Override
-    public ReportResponse createReport(long rideId, String driverUsername, CreateReportRequest createReportRequest) {
+    public void createReport(long rideId, String driverUsername, CreateReportRequest createReportRequest) {
         Ride ride = findRide(rideId, driverUsername);
         RideReport report = new RideReport();
         report.setDriver(driverRepository.getOne(driverUsername));
         report.setRide(ride);
         report.setReport(createReportRequest.getReport());
-        RideReport savedReport = reportRepository.save(report);
-        return conversion.convert(savedReport, ReportResponse.class);
+        reportRepository.save(report);
     }
     
     private Ride findRide(long rideId, String driverUsername) {

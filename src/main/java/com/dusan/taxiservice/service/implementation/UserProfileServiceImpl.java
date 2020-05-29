@@ -30,14 +30,14 @@ class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public User updateProfile(String username, UpdateUserProfileRequest updateProfileRequest) {
+    public void updateProfile(String username, UpdateUserProfileRequest updateProfileRequest) {
         User user = userRepository.findById(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         boolean isUpdatingEmail = !user.getEmail().equals(updateProfileRequest.getEmail());
         if (isUpdatingEmail)
             checkEmailUniqueness(updateProfileRequest.getEmail());
         BeanUtils.copyProperties(updateProfileRequest, user);
-        return userRepository.save(user);      
+        userRepository.save(user);
     }
     
     private void checkEmailUniqueness(String email) {

@@ -12,6 +12,7 @@ import com.dusan.taxiservice.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -84,12 +85,14 @@ class UserProfileServiceImplTest {
         User userToUpdate = getUserModel();
         given(userRepository.findById(username)).willReturn(Optional.of(userToUpdate));
 
-        given(userRepository.save(any())).willAnswer(invoker -> invoker.getArgument(0));
-
         // when
-        User updatedUser = userProfileService.updateProfile(username, testRequest);
+        userProfileService.updateProfile(username, testRequest);
 
         // then
+        ArgumentCaptor<User> argumentCaptor = ArgumentCaptor.forClass(User.class);
+        then(userRepository).should().save(argumentCaptor.capture());
+        User updatedUser = argumentCaptor.getValue();
+
         assertAll(
                 () -> assertEquals(testRequest.getFirstName(), updatedUser.getFirstName()),
                 () -> assertEquals(testRequest.getLastName(), updatedUser.getLastName()),

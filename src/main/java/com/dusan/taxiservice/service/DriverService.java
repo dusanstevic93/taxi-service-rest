@@ -12,8 +12,8 @@ import com.dusan.taxiservice.entity.enums.DriverStatuses;
 
 public interface DriverService {
 
-    Driver updateLocation(String username, LocationDto location);
-    Driver updateStatus(String username, DriverStatuses status);
+    void updateLocation(String username, LocationDto location);
+    void updateStatus(String username, DriverStatuses status);
     DriverStatuses getCurrentStatus(String username);
     List<DriverResponse> findAllDrivers(DriverQueryParams queryParams, PageParams pageParams);
     List<UserProfileResponse> findAllVehicleDrivers(long vehicleId);  

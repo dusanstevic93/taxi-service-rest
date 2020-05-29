@@ -5,6 +5,6 @@ import com.dusan.taxiservice.dto.response.CommentResponse;
 
 public interface RideCommentService {
 
-    CommentResponse createComment(long rideId, String clientUsername, CreateCommentRequest createCommentReqeust);
+    void createComment(long rideId, String clientUsername, CreateCommentRequest createCommentReqeust);
     CommentResponse findComment(long rideId, String clientUsername);
 }

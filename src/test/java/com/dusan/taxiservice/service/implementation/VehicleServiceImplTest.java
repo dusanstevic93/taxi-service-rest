@@ -51,16 +51,13 @@ class VehicleServiceImplTest {
         VehicleType vehicleType = new VehicleType();
         ReflectionTestUtils.setField(vehicleType, "id", testRequest.getType().getId());
         given(vehicleTypeRepository.getOne(testRequest.getType().getId())).willReturn(vehicleType);
-        given(vehicleRepository.save(any())).willAnswer(invoker -> invoker.getArgument(0));
-        given(conversion.convert(any(), eq(VehicleResponse.class))).willReturn(new VehicleResponse());
 
         // when
         vehicleService.createVehicle(testRequest);
 
         // then
         ArgumentCaptor<Vehicle> argumentCaptor = ArgumentCaptor.forClass(Vehicle.class);
-        then(conversion).should().convert(argumentCaptor.capture(), eq(VehicleResponse.class));
-
+        then(vehicleRepository).should().save(argumentCaptor.capture());
         Vehicle createdVehicle = argumentCaptor.getValue();
 
         assertAll(
@@ -123,14 +120,12 @@ class VehicleServiceImplTest {
         ReflectionTestUtils.setField(vehicleType, "id", updateRequest.getType().getId());
         given(vehicleTypeRepository.getOne(updateRequest.getType().getId())).willReturn(vehicleType);
 
-        given(vehicleRepository.save(vehicleToUpdate)).willAnswer(invoker -> invoker.getArgument(0));
-
         // when
         vehicleService.updateVehicle(1L, updateRequest);
 
         // then
         ArgumentCaptor<Vehicle> argumentCaptor = ArgumentCaptor.forClass(Vehicle.class);
-        then(conversion).should().convert(argumentCaptor.capture(), eq(VehicleResponse.class));
+        then(vehicleRepository).should().save(argumentCaptor.capture());
 
         Vehicle updatedVehicle = argumentCaptor.getValue();
 

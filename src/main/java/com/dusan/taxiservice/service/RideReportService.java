@@ -5,7 +5,7 @@ import com.dusan.taxiservice.dto.response.ReportResponse;
 
 public interface RideReportService {
 
-    ReportResponse createReport(long rideId, String driverUsername, CreateReportRequest createReportRequest);
+    void createReport(long rideId, String driverUsername, CreateReportRequest createReportRequest);
     ReportResponse getSpecificDriverReport(long rideId, String driverUsername);
     ReportResponse getAnyReport(long rideId);
 }

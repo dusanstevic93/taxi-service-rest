@@ -28,15 +28,14 @@ class RideCommentServiceImpl implements RideCommentService {
     private ConversionService conversion;
     
     @Override
-    public CommentResponse createComment(long rideId, String clientUsername, CreateCommentRequest createCommentRequest) {
+    public void createComment(long rideId, String clientUsername, CreateCommentRequest createCommentRequest) {
         Ride ride = findRide(rideId, clientUsername);
         RideComment rideComment = new RideComment();
         rideComment.setCreationDateTime(LocalDateTime.now());
         rideComment.setComment(createCommentRequest.getText());
         rideComment.setClient(clientRepository.getOne(clientUsername));
         rideComment.setRide(ride);
-        RideComment savedComment = commentRepository.save(rideComment);
-        return conversion.convert(savedComment, CommentResponse.class);
+        commentRepository.save(rideComment);
     }
     
     private Ride findRide(long rideId, String clientUsername) {

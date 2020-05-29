@@ -39,19 +39,18 @@ class DriverServiceImpl implements DriverService {
     private ConversionService conversion;
     
     @Override
-    public Driver updateLocation(String username, LocationDto locationDto) {
+    public void updateLocation(String username, LocationDto locationDto) {
         Driver driver = findDriver(username);
         driver.setCurrentLocation(new Location(locationDto.getLatitude(), locationDto.getLongitude()));
-        return driverRepository.save(driver);       
+        driverRepository.save(driver);
     }
     
     @Override
     @Transactional
-    public Driver updateStatus(String username, DriverStatuses status) {
+    public void updateStatus(String username, DriverStatuses status) {
         driverRepository.updateStatus(username, status.getId());
         /*if (status == DriverStatuses.NOT_WORKING)
             driver.setCurrentLocation(null);*/
-        return null;
     }
     
     @Override

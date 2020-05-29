@@ -7,5 +7,5 @@ import com.dusan.taxiservice.entity.User;
 public interface UserProfileService {
 
     UserProfileResponse getProfile(String username);
-    User updateProfile(String username, UpdateUserProfileRequest updateProfileRequest);
+    void updateProfile(String username, UpdateUserProfileRequest updateProfileRequest);
 }
