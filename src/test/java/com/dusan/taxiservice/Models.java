@@ -3,6 +3,8 @@ package com.dusan.taxiservice;
 import com.dusan.taxiservice.dto.request.CreateClientRequest;
 import com.dusan.taxiservice.dto.request.CreateDriverRequest;
 import com.dusan.taxiservice.dto.request.CreateVehicleRequest;
+import com.dusan.taxiservice.dto.request.UpdateUserProfileRequest;
+import com.dusan.taxiservice.dto.response.UserProfileResponse;
 import com.dusan.taxiservice.dto.response.VehicleResponse;
 import com.dusan.taxiservice.entity.enums.Gender;
 import com.dusan.taxiservice.entity.enums.VehicleTypes;
@@ -11,6 +13,27 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Models {
+
+    public static UserProfileResponse getUserProfileResponseModel() {
+        UserProfileResponse response = new UserProfileResponse();
+        response.setUsername("username test");
+        response.setFirstName("first name test");
+        response.setLastName("last name test");
+        response.setEmail("test@mail.com");
+        response.setPhone("0123");
+        response.setGender(Gender.MALE);
+        return response;
+    }
+
+    public static UpdateUserProfileRequest getUpdateUserProfileRequest() {
+        UpdateUserProfileRequest request = new UpdateUserProfileRequest();
+        request.setFirstName("first name test");
+        request.setLastName("last name test");
+        request.setEmail("test@mail.com");
+        request.setPhone("0123");
+        request.setGender(Gender.MALE);
+        return request;
+    }
 
     public static CreateClientRequest getCreateClientRequestModel() {
         CreateClientRequest testRequest = new CreateClientRequest();

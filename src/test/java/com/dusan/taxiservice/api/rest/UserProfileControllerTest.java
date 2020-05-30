@@ -1,10 +1,12 @@
 package com.dusan.taxiservice.api.rest;
 
+import com.dusan.taxiservice.Models;
+import com.dusan.taxiservice.dto.request.UpdateUserProfileRequest;
 import com.dusan.taxiservice.dto.response.UserProfileResponse;
-import com.dusan.taxiservice.entity.enums.Gender;
 import com.dusan.taxiservice.service.UserProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @WebMvcTest(controllers = UserProfileController.class)
 class UserProfileControllerTest extends BaseControllerTest {
@@ -29,7 +32,7 @@ class UserProfileControllerTest extends BaseControllerTest {
     @Test
     @WithMockUser
     void testGetProfile() throws Exception {
-        UserProfileResponse profileData = getProfileData();
+        UserProfileResponse profileData = Models.getUserProfileResponseModel();
 
         given(profileService.getProfile(anyString())).willReturn(profileData);
 
@@ -55,33 +58,31 @@ class UserProfileControllerTest extends BaseControllerTest {
     @Test
     @WithMockUser
     void testUpdateProfile() throws Exception {
-        String json = new ObjectMapper().writeValueAsString(getProfileData());
+        UpdateUserProfileRequest updateRequest = Models.getUpdateUserProfileRequest();
+        String json = new ObjectMapper().writeValueAsString(updateRequest);
 
         mvc.perform(put(Mappings.PROFILE_BASE_PATH).contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk());
 
-        then(profileService).should().updateProfile(anyString(), any());
+        ArgumentCaptor<UpdateUserProfileRequest> argumentCaptor = ArgumentCaptor.forClass(UpdateUserProfileRequest.class);
+        then(profileService).should().updateProfile(anyString(), argumentCaptor.capture());
+        UpdateUserProfileRequest profileToUpdate = argumentCaptor.getValue();
+
+        assertAll(
+                () -> assertEquals(updateRequest.getFirstName(), profileToUpdate.getFirstName()),
+                () -> assertEquals(updateRequest.getLastName(), profileToUpdate.getLastName()),
+                () -> assertEquals(updateRequest.getGender(), profileToUpdate.getGender()),
+                () -> assertEquals(updateRequest.getPhone(), profileToUpdate.getPhone()),
+                () -> assertEquals(updateRequest.getEmail(), profileToUpdate.getEmail())
+        );
     }
 
     @Test
     @WithAnonymousUser
     void testUpdateProfileWithAnonymousUser() throws Exception {
-        String json = new ObjectMapper().writeValueAsString(getProfileData());
-
-        mvc.perform(put(Mappings.PROFILE_BASE_PATH).contentType(MediaType.APPLICATION_JSON).content(json))
+        mvc.perform(put(Mappings.PROFILE_BASE_PATH).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
 
         then(profileService).should(never()).updateProfile(anyString(), any());
-    }
-
-    private UserProfileResponse getProfileData(){
-        UserProfileResponse profileData = new UserProfileResponse();
-        profileData.setUsername("username test");
-        profileData.setFirstName("first name test");
-        profileData.setLastName("last name test");
-        profileData.setEmail("test@mail.com");
-        profileData.setPhone("0123");
-        profileData.setGender(Gender.MALE);
-        return profileData;
     }
 }
