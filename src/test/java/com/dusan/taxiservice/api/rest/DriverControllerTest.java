@@ -1,9 +1,9 @@
 package com.dusan.taxiservice.api.rest;
 
-import com.dusan.taxiservice.Models;
 import com.dusan.taxiservice.dto.LocationDto;
 import com.dusan.taxiservice.dto.response.DriverResponse;
 import com.dusan.taxiservice.entity.enums.DriverStatuses;
+import com.dusan.taxiservice.model.CommonModels;
 import com.dusan.taxiservice.service.DriverService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,7 @@ class DriverControllerTest extends BaseControllerTest {
     @Test
     @WithMockUser(roles = "DRIVER")
     void testUpdateLocationShouldBeSuccessful() throws Exception {
-        LocationDto location = Models.getLocationDtoModel();
+        LocationDto location = CommonModels.getLocationDtoModel();
         String json = new ObjectMapper().writeValueAsString(location);
         mvc.perform(put(Mappings.DRIVER_BASE_PATH + Mappings.UPDATE_LOCATION)
                 .contentType(MediaType.APPLICATION_JSON).content(json))

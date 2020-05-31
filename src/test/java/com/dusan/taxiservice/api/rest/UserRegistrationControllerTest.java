@@ -1,8 +1,8 @@
 package com.dusan.taxiservice.api.rest;
 
-import com.dusan.taxiservice.Models;
 import com.dusan.taxiservice.dto.request.CreateClientRequest;
 import com.dusan.taxiservice.dto.request.CreateDriverRequest;
+import com.dusan.taxiservice.model.RequestModels;
 import com.dusan.taxiservice.service.UserRegistrationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class UserRegistrationControllerTest extends BaseControllerTest {
 
     @Test
     void testRegisterClient() throws Exception {
-        CreateClientRequest request = Models.getCreateClientRequestModel();
+        CreateClientRequest request = RequestModels.getCreateClientRequestModel();
         String json = new ObjectMapper().writeValueAsString(request);
         mvc.perform(post(Mappings.REGISTRATION_BASE_PATH + Mappings.REGISTER_CLIENT)
                 .contentType(MediaType.APPLICATION_JSON).content(json))
@@ -54,7 +54,7 @@ class UserRegistrationControllerTest extends BaseControllerTest {
     @Test
     @WithMockUser(roles = "DISPATCHER")
     void testRegisterDriverShouldBeSuccessful() throws Exception {
-        CreateDriverRequest request = Models.getCreateDriverRequestModel();
+        CreateDriverRequest request = RequestModels.getCreateDriverRequestModel();
         String json = new ObjectMapper().writeValueAsString(request);
         mvc.perform(post(Mappings.REGISTRATION_BASE_PATH + Mappings.REGISTER_DRIVER)
                 .contentType(MediaType.APPLICATION_JSON).content(json))
@@ -78,7 +78,7 @@ class UserRegistrationControllerTest extends BaseControllerTest {
     @Test
     @WithMockUser(roles = {"DRIVER, CLIENT"})
     void testRegisterDriverUserDoesNotHaveRequiredRole() throws Exception {
-        CreateDriverRequest request = Models.getCreateDriverRequestModel();
+        CreateDriverRequest request = RequestModels.getCreateDriverRequestModel();
         String json = new ObjectMapper().writeValueAsString(request);
         mvc.perform(post(Mappings.REGISTRATION_BASE_PATH + Mappings.REGISTER_DRIVER)
                 .contentType(MediaType.APPLICATION_JSON).content(json))
@@ -90,7 +90,7 @@ class UserRegistrationControllerTest extends BaseControllerTest {
     @Test
     @WithAnonymousUser
     void testRegisterDriverUserIsAnonymous() throws Exception {
-        CreateDriverRequest request = Models.getCreateDriverRequestModel();
+        CreateDriverRequest request = RequestModels.getCreateDriverRequestModel();
         String json = new ObjectMapper().writeValueAsString(request);
         mvc.perform(post(Mappings.REGISTRATION_BASE_PATH + Mappings.REGISTER_DRIVER)
                 .contentType(MediaType.APPLICATION_JSON).content(json))

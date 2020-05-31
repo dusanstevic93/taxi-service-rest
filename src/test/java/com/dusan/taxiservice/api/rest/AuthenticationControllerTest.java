@@ -1,7 +1,7 @@
 package com.dusan.taxiservice.api.rest;
 
-import com.dusan.taxiservice.Models;
 import com.dusan.taxiservice.dto.request.LoginRequest;
+import com.dusan.taxiservice.model.RequestModels;
 import com.dusan.taxiservice.service.AuthenticationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class AuthenticationControllerTest extends BaseControllerTest{
     @Test
     void testAuthenticateShouldBeSuccessful() throws Exception {
         given(authenticationService.authenticate(any())).willReturn("Bearer token");
-        LoginRequest request = Models.getLoginRequestModel();
+        LoginRequest request = RequestModels.getLoginRequestModel();
         String json = new ObjectMapper().writeValueAsString(request);
         mvc.perform(post(Mappings.AUTHENTICATION_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON).content(json))
@@ -39,7 +39,7 @@ class AuthenticationControllerTest extends BaseControllerTest{
     @Test
     void testAuthenticateBadCredentials() throws Exception {
         given(authenticationService.authenticate(any())).willThrow(BadCredentialsException.class);
-        LoginRequest request = Models.getLoginRequestModel();
+        LoginRequest request = RequestModels.getLoginRequestModel();
         String json = new ObjectMapper().writeValueAsString(request);
         mvc.perform(post(Mappings.AUTHENTICATION_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON).content(json))

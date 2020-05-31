@@ -1,8 +1,9 @@
 package com.dusan.taxiservice.api.rest;
 
-import com.dusan.taxiservice.Models;
 import com.dusan.taxiservice.dto.request.UpdateUserProfileRequest;
 import com.dusan.taxiservice.dto.response.UserProfileResponse;
+import com.dusan.taxiservice.model.RequestModels;
+import com.dusan.taxiservice.model.ResponseModels;
 import com.dusan.taxiservice.service.UserProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class UserProfileControllerTest extends BaseControllerTest {
     @Test
     @WithMockUser
     void testGetProfile() throws Exception {
-        UserProfileResponse profileData = Models.getUserProfileResponseModel();
+        UserProfileResponse profileData = ResponseModels.getUserProfileResponseModel();
 
         given(profileService.getProfile(anyString())).willReturn(profileData);
 
@@ -58,7 +59,7 @@ class UserProfileControllerTest extends BaseControllerTest {
     @Test
     @WithMockUser
     void testUpdateProfile() throws Exception {
-        UpdateUserProfileRequest updateRequest = Models.getUpdateUserProfileRequest();
+        UpdateUserProfileRequest updateRequest = RequestModels.getUpdateUserProfileRequest();
         String json = new ObjectMapper().writeValueAsString(updateRequest);
 
         mvc.perform(put(Mappings.PROFILE_BASE_PATH).contentType(MediaType.APPLICATION_JSON).content(json))

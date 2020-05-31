@@ -1,9 +1,10 @@
 package com.dusan.taxiservice.api.rest;
 
-import com.dusan.taxiservice.Models;
 import com.dusan.taxiservice.dto.request.CreateVehicleRequest;
 import com.dusan.taxiservice.dto.response.UserProfileResponse;
 import com.dusan.taxiservice.dto.response.VehicleResponse;
+import com.dusan.taxiservice.model.RequestModels;
+import com.dusan.taxiservice.model.ResponseModels;
 import com.dusan.taxiservice.service.DriverService;
 import com.dusan.taxiservice.service.VehicleService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +42,7 @@ class VehicleControllerTest extends BaseControllerTest{
     @Test
     @WithMockUser(roles = "DISPATCHER")
     void testCreateVehicleShouldBeSuccessful() throws Exception {
-        CreateVehicleRequest request = Models.getCreateVehicleRequestModel();
+        CreateVehicleRequest request = RequestModels.getCreateVehicleRequestModel();
         String json = new ObjectMapper().writeValueAsString(request);
         mvc.perform(post(Mappings.VEHICLE_BASE_PATH).contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated());
@@ -89,7 +90,7 @@ class VehicleControllerTest extends BaseControllerTest{
     @Test
     @WithMockUser(roles = "DISPATCHER")
     void testRetrieveVehicleShouldBeSuccessful() throws Exception {
-        VehicleResponse response = Models.getVehicleResponseModel();
+        VehicleResponse response = ResponseModels.getVehicleResponseModel();
         given(vehicleService.findVehicle(response.getId())).willReturn(response);
         mvc.perform(get(Mappings.VEHICLE_BASE_PATH + "/{vehicleId}", response.getId()).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(response.getId()))
@@ -111,7 +112,7 @@ class VehicleControllerTest extends BaseControllerTest{
     @Test
     @WithMockUser(roles = "DISPATCHER")
     void testUpdateVehicleShouldBeSuccessful() throws Exception {
-        CreateVehicleRequest request = Models.getCreateVehicleRequestModel();
+        CreateVehicleRequest request = RequestModels.getCreateVehicleRequestModel();
         String json = new ObjectMapper().writeValueAsString(request);
         mvc.perform(put(Mappings.VEHICLE_BASE_PATH + "/{vehicleId}", 1L)
                 .contentType(MediaType.APPLICATION_JSON).content(json))
