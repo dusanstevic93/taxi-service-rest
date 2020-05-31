@@ -1,10 +1,7 @@
 package com.dusan.taxiservice;
 
 import com.dusan.taxiservice.dto.LocationDto;
-import com.dusan.taxiservice.dto.request.CreateClientRequest;
-import com.dusan.taxiservice.dto.request.CreateDriverRequest;
-import com.dusan.taxiservice.dto.request.CreateVehicleRequest;
-import com.dusan.taxiservice.dto.request.UpdateUserProfileRequest;
+import com.dusan.taxiservice.dto.request.*;
 import com.dusan.taxiservice.dto.response.UserProfileResponse;
 import com.dusan.taxiservice.dto.response.VehicleResponse;
 import com.dusan.taxiservice.entity.enums.Gender;
@@ -81,5 +78,12 @@ public class Models {
     public static LocationDto getLocationDtoModel() {
         LocationDto location = new LocationDto(25.85, 13.26);
         return location;
+    }
+
+    public static LoginRequest getLoginRequestModel() {
+        LoginRequest request = new LoginRequest();
+        request.setUsername("usernameTest");
+        request.setPassword("passwordTest");
+        return request;
     }
 }
