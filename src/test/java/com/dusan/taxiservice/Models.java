@@ -1,5 +1,6 @@
 package com.dusan.taxiservice;
 
+import com.dusan.taxiservice.dto.LocationDto;
 import com.dusan.taxiservice.dto.request.CreateClientRequest;
 import com.dusan.taxiservice.dto.request.CreateDriverRequest;
 import com.dusan.taxiservice.dto.request.CreateVehicleRequest;
@@ -75,5 +76,10 @@ public class Models {
         response.setLicencePlate("aaa-111");
         response.setProductionYear(2019);
         return  response;
+    }
+
+    public static LocationDto getLocationDtoModel() {
+        LocationDto location = new LocationDto(25.85, 13.26);
+        return location;
     }
 }
