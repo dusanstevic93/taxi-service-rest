@@ -1,4 +1,4 @@
-package com.dusan.taxiservice.entity.specification;
+package com.dusan.taxiservice.dao.specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

@@ -1,4 +1,4 @@
-package com.dusan.taxiservice.entity.specification;
+package com.dusan.taxiservice.dao.specification;
 
 import java.util.ArrayList;
 import java.util.List;

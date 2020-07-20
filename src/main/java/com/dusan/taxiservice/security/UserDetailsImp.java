@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.dusan.taxiservice.entity.enums.UserRoles;
-import com.dusan.taxiservice.entity.projection.LoginProjection;
+import com.dusan.taxiservice.dao.projection.LoginProjection;
 
 import lombok.AllArgsConstructor;
 

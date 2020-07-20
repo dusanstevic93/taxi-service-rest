@@ -1,4 +1,4 @@
-package com.dusan.taxiservice.dao;
+package com.dusan.taxiservice.dao.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

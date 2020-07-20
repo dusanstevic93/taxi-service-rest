@@ -1,4 +1,4 @@
-package com.dusan.taxiservice.entity.projection;
+package com.dusan.taxiservice.dao.projection;
 
 import com.dusan.taxiservice.entity.enums.Gender;
 

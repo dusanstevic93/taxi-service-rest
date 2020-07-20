@@ -5,15 +5,15 @@ import java.time.LocalDateTime;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
-import com.dusan.taxiservice.dao.ClientRepository;
-import com.dusan.taxiservice.dao.RideCommentRepository;
-import com.dusan.taxiservice.dao.RideRepository;
+import com.dusan.taxiservice.dao.repository.ClientRepository;
+import com.dusan.taxiservice.dao.repository.RideCommentRepository;
+import com.dusan.taxiservice.dao.repository.RideRepository;
 import com.dusan.taxiservice.dto.request.CreateCommentRequest;
 import com.dusan.taxiservice.dto.response.CommentResponse;
 import com.dusan.taxiservice.entity.Client;
 import com.dusan.taxiservice.entity.Ride;
 import com.dusan.taxiservice.entity.RideComment;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
 import com.dusan.taxiservice.service.RideCommentService;
 
 import lombok.AllArgsConstructor;

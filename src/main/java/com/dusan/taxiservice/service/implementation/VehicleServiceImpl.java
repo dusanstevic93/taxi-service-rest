@@ -9,13 +9,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.dusan.taxiservice.dao.VehicleRepository;
-import com.dusan.taxiservice.dao.VehicleTypeRepository;
+import com.dusan.taxiservice.dao.repository.VehicleRepository;
+import com.dusan.taxiservice.dao.repository.VehicleTypeRepository;
 import com.dusan.taxiservice.dto.request.CreateVehicleRequest;
 import com.dusan.taxiservice.dto.request.PageParams;
 import com.dusan.taxiservice.dto.response.VehicleResponse;
 import com.dusan.taxiservice.entity.Vehicle;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
 import com.dusan.taxiservice.service.VehicleService;
 
 import lombok.AllArgsConstructor;

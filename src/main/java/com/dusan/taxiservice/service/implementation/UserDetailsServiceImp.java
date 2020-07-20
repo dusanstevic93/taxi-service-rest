@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.dusan.taxiservice.dao.UserRepository;
-import com.dusan.taxiservice.entity.projection.LoginProjection;
+import com.dusan.taxiservice.dao.repository.UserRepository;
+import com.dusan.taxiservice.dao.projection.LoginProjection;
 import com.dusan.taxiservice.security.UserDetailsImp;
 
 import lombok.AllArgsConstructor;

@@ -11,7 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.dusan.taxiservice.dao.RideRepository;
+import com.dusan.taxiservice.dao.repository.RideRepository;
 import com.dusan.taxiservice.dto.request.RidePageParams;
 import com.dusan.taxiservice.dto.request.RidePageParams.PageSort;
 import com.dusan.taxiservice.dto.request.RideQueryParams;
@@ -19,9 +19,9 @@ import com.dusan.taxiservice.dto.response.RideResponse;
 import com.dusan.taxiservice.entity.Ride;
 import com.dusan.taxiservice.entity.enums.RideStatuses;
 import com.dusan.taxiservice.entity.enums.UserRoles;
-import com.dusan.taxiservice.entity.specification.DispatcherRideSpecification;
-import com.dusan.taxiservice.entity.specification.GenericRideSpecification;
-import com.dusan.taxiservice.entity.specification.RoleRideSpecification;
+import com.dusan.taxiservice.dao.specification.DispatcherRideSpecification;
+import com.dusan.taxiservice.dao.specification.GenericRideSpecification;
+import com.dusan.taxiservice.dao.specification.RoleRideSpecification;
 
 import lombok.AllArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.dusan.taxiservice.exception;
+package com.dusan.taxiservice.service.exception;
 
 public class ConflictException extends RuntimeException {
 

@@ -1,9 +1,9 @@
 package com.dusan.taxiservice.service.implementation;
 
-import com.dusan.taxiservice.dao.ClientRepository;
-import com.dusan.taxiservice.dao.RideRepository;
-import com.dusan.taxiservice.dao.RideStatusRepository;
-import com.dusan.taxiservice.dao.VehicleTypeRepository;
+import com.dusan.taxiservice.dao.repository.ClientRepository;
+import com.dusan.taxiservice.dao.repository.RideRepository;
+import com.dusan.taxiservice.dao.repository.RideStatusRepository;
+import com.dusan.taxiservice.dao.repository.VehicleTypeRepository;
 import com.dusan.taxiservice.dto.LocationDto;
 import com.dusan.taxiservice.dto.request.CreateRideRequest;
 import com.dusan.taxiservice.entity.Client;
@@ -12,8 +12,8 @@ import com.dusan.taxiservice.entity.RideStatus;
 import com.dusan.taxiservice.entity.VehicleType;
 import com.dusan.taxiservice.entity.enums.RideStatuses;
 import com.dusan.taxiservice.entity.enums.VehicleTypes;
-import com.dusan.taxiservice.exception.ConflictException;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.service.exception.ConflictException;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;

@@ -1,14 +1,14 @@
 package com.dusan.taxiservice.service.implementation;
 
-import com.dusan.taxiservice.dao.VehicleRepository;
-import com.dusan.taxiservice.dao.VehicleTypeRepository;
+import com.dusan.taxiservice.dao.repository.VehicleRepository;
+import com.dusan.taxiservice.dao.repository.VehicleTypeRepository;
 import com.dusan.taxiservice.dto.request.CreateVehicleRequest;
 import com.dusan.taxiservice.dto.request.PageParams;
 import com.dusan.taxiservice.dto.response.VehicleResponse;
 import com.dusan.taxiservice.entity.Vehicle;
 import com.dusan.taxiservice.entity.VehicleType;
 import com.dusan.taxiservice.entity.enums.VehicleTypes;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;

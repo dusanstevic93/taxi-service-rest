@@ -3,15 +3,15 @@ package com.dusan.taxiservice.service.implementation;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
-import com.dusan.taxiservice.dao.DriverRepository;
-import com.dusan.taxiservice.dao.RideReportRepository;
-import com.dusan.taxiservice.dao.RideRepository;
+import com.dusan.taxiservice.dao.repository.DriverRepository;
+import com.dusan.taxiservice.dao.repository.RideReportRepository;
+import com.dusan.taxiservice.dao.repository.RideRepository;
 import com.dusan.taxiservice.dto.request.CreateReportRequest;
 import com.dusan.taxiservice.dto.response.ReportResponse;
 import com.dusan.taxiservice.entity.Driver;
 import com.dusan.taxiservice.entity.Ride;
 import com.dusan.taxiservice.entity.RideReport;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
 import com.dusan.taxiservice.service.RideReportService;
 
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.dusan.taxiservice.dao;
+package com.dusan.taxiservice.dao.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.dusan.taxiservice.entity.Driver;
-import com.dusan.taxiservice.entity.projection.UserProjection;
+import com.dusan.taxiservice.dao.projection.UserProjection;
 
 public interface DriverRepository extends JpaRepository<Driver, String>, JpaSpecificationExecutor<Driver> {
 
@@ -30,7 +30,7 @@ public interface DriverRepository extends JpaRepository<Driver, String>, JpaSpec
     @Query(value = "SELECT driver.status.id FROM Driver driver WHERE driver.username = :username")
     long getCurrentStatusId(@Param("username") String username);
     
-    @Query("SELECT new com.dusan.taxiservice.entity.projection.UserProjection("
+    @Query("SELECT new com.dusan.taxiservice.dao.projection.UserProjection("
             + "driver.username,"
             + "driver.firstName,"
             + "driver.lastName,"

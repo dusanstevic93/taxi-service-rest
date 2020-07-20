@@ -1,14 +1,14 @@
 package com.dusan.taxiservice.service.implementation;
 
-import com.dusan.taxiservice.dao.UserRepository;
+import com.dusan.taxiservice.dao.repository.UserRepository;
 import com.dusan.taxiservice.dto.request.UpdateUserProfileRequest;
 import com.dusan.taxiservice.dto.response.UserProfileResponse;
 import com.dusan.taxiservice.entity.Client;
 import com.dusan.taxiservice.entity.User;
 import com.dusan.taxiservice.entity.enums.Gender;
-import com.dusan.taxiservice.entity.projection.UserProjection;
-import com.dusan.taxiservice.exception.EmailExistsException;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.dao.projection.UserProjection;
+import com.dusan.taxiservice.service.exception.EmailExistsException;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;

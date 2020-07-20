@@ -4,19 +4,19 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.dusan.taxiservice.dao.DriverStatusRepository;
-import com.dusan.taxiservice.dao.RoleRepository;
-import com.dusan.taxiservice.dao.UserRepository;
-import com.dusan.taxiservice.dao.VehicleRepository;
+import com.dusan.taxiservice.dao.repository.DriverStatusRepository;
+import com.dusan.taxiservice.dao.repository.RoleRepository;
+import com.dusan.taxiservice.dao.repository.UserRepository;
+import com.dusan.taxiservice.dao.repository.VehicleRepository;
 import com.dusan.taxiservice.dto.request.CreateClientRequest;
 import com.dusan.taxiservice.dto.request.CreateDriverRequest;
 import com.dusan.taxiservice.entity.Client;
 import com.dusan.taxiservice.entity.Driver;
 import com.dusan.taxiservice.entity.enums.DriverStatuses;
 import com.dusan.taxiservice.entity.enums.UserRoles;
-import com.dusan.taxiservice.exception.EmailExistsException;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
-import com.dusan.taxiservice.exception.UsernameExistsException;
+import com.dusan.taxiservice.service.exception.EmailExistsException;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.service.exception.UsernameExistsException;
 import com.dusan.taxiservice.service.UserRegistrationService;
 
 import lombok.AllArgsConstructor;

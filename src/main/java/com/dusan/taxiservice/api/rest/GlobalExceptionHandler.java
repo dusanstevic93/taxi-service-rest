@@ -1,9 +1,9 @@
 package com.dusan.taxiservice.api.rest;
 
-import com.dusan.taxiservice.exception.ConflictException;
-import com.dusan.taxiservice.exception.EmailExistsException;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
-import com.dusan.taxiservice.exception.UsernameExistsException;
+import com.dusan.taxiservice.service.exception.ConflictException;
+import com.dusan.taxiservice.service.exception.EmailExistsException;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.service.exception.UsernameExistsException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;

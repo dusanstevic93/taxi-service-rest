@@ -1,4 +1,4 @@
-package com.dusan.taxiservice.dao;
+package com.dusan.taxiservice.dao.repository;
 
 import java.util.List;
 import java.util.Optional;

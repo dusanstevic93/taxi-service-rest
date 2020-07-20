@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,8 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dusan.taxiservice.dao.DriverRepository;
-import com.dusan.taxiservice.dao.DriverStatusRepository;
+import com.dusan.taxiservice.dao.repository.DriverRepository;
+import com.dusan.taxiservice.dao.repository.DriverStatusRepository;
 import com.dusan.taxiservice.dto.LocationDto;
 import com.dusan.taxiservice.dto.request.DriverQueryParams;
 import com.dusan.taxiservice.dto.request.PageParams;
@@ -23,9 +22,9 @@ import com.dusan.taxiservice.dto.response.UserProfileResponse;
 import com.dusan.taxiservice.entity.Driver;
 import com.dusan.taxiservice.entity.Location;
 import com.dusan.taxiservice.entity.enums.DriverStatuses;
-import com.dusan.taxiservice.entity.projection.UserProjection;
-import com.dusan.taxiservice.entity.specification.DriverSpecification;
-import com.dusan.taxiservice.exception.ResourceNotFoundException;
+import com.dusan.taxiservice.dao.projection.UserProjection;
+import com.dusan.taxiservice.dao.specification.DriverSpecification;
+import com.dusan.taxiservice.service.exception.ResourceNotFoundException;
 import com.dusan.taxiservice.service.DriverService;
 
 import lombok.AllArgsConstructor;
