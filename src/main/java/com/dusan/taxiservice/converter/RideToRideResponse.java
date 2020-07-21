@@ -9,8 +9,9 @@ import com.dusan.taxiservice.entity.enums.RideStatuses;
 import com.dusan.taxiservice.entity.enums.VehicleTypes;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
+@Component
 public class RideToRideResponse implements Converter<Ride, RideResponse> {
     
     @Override

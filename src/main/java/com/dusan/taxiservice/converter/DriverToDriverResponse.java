@@ -9,7 +9,9 @@ import com.dusan.taxiservice.entity.Driver;
 import com.dusan.taxiservice.entity.enums.DriverStatuses;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @AllArgsConstructor
 public class DriverToDriverResponse implements Converter<Driver, DriverResponse> {
 

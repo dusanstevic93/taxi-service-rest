@@ -4,7 +4,9 @@ import org.springframework.core.convert.converter.Converter;
 
 import com.dusan.taxiservice.dto.response.ReportResponse;
 import com.dusan.taxiservice.entity.RideReport;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ReportToReportResponse implements Converter<RideReport, ReportResponse> {
 
     @Override

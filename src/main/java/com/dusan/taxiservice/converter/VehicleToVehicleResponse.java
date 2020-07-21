@@ -6,7 +6,9 @@ import org.springframework.core.convert.converter.Converter;
 import com.dusan.taxiservice.dto.response.VehicleResponse;
 import com.dusan.taxiservice.entity.Vehicle;
 import com.dusan.taxiservice.entity.enums.VehicleTypes;
+import org.springframework.stereotype.Component;
 
+@Component
 public class VehicleToVehicleResponse implements Converter<Vehicle, VehicleResponse> {
 
     @Override

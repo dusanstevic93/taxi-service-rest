@@ -4,7 +4,9 @@ import org.springframework.core.convert.converter.Converter;
 
 import com.dusan.taxiservice.dto.response.CommentResponse;
 import com.dusan.taxiservice.entity.RideComment;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CommentToCommentResponse implements Converter<RideComment, CommentResponse> {
 
     @Override
