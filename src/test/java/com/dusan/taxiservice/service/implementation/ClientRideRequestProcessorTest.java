@@ -23,6 +23,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
@@ -44,6 +45,9 @@ class ClientRideRequestProcessorTest {
 
     @Mock
     private ClientRepository clientRepository;
+
+    @Mock
+    private ConversionService conversionService;
 
     @InjectMocks
     private ClientRideRequestProcessor clientRequestProcessor;

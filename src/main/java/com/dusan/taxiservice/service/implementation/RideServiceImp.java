@@ -33,20 +33,20 @@ class RideServiceImp implements RideService {
     
     
     @Override
-    public void createRide(String clientUsername, CreateRideRequest createRideRequest) {
-        clientRequestProcessor.createRide(clientUsername, createRideRequest);
+    public RideResponse createRide(String clientUsername, CreateRideRequest createRideRequest) {
+        return clientRequestProcessor.createRide(clientUsername, createRideRequest);
     }
 
     @Override
     @Transactional
-    public void updateRide(long rideId, String clientUsername, CreateRideRequest updateRideRequest) {
-        clientRequestProcessor.updateRide(rideId, clientUsername, updateRideRequest);
+    public RideResponse updateRide(long rideId, String clientUsername, CreateRideRequest updateRideRequest) {
+        return clientRequestProcessor.updateRide(rideId, clientUsername, updateRideRequest);
     }
 
     @Override
     @Transactional
-    public void cancelRide(long rideId, String clientUsername) {
-        clientRequestProcessor.cancelRide(rideId, clientUsername);
+    public RideResponse cancelRide(long rideId, String clientUsername) {
+        return clientRequestProcessor.cancelRide(rideId, clientUsername);
     }
     
     @Override

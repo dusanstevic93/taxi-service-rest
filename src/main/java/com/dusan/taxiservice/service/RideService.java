@@ -13,9 +13,9 @@ import com.dusan.taxiservice.entity.enums.UserRoles;
 
 public interface RideService {
 
-    void createRide(String clientUsername, CreateRideRequest createRideRequest);
-    void updateRide(long rideId, String clientUsername, CreateRideRequest updateRideRequest);
-    void cancelRide(long rideId, String clientUsername);
+    RideResponse createRide(String clientUsername, CreateRideRequest createRideRequest);
+    RideResponse updateRide(long rideId, String clientUsername, CreateRideRequest updateRideRequest);
+    RideResponse cancelRide(long rideId, String clientUsername);
     void rateRide(long rideId, String clientUsername, int rating);
     void formRide(String dispatcherUsername, String driverUsername, FormRideRequest formRideRequest);
     void processRide(long rideId, String dispatcherUsername, String driverUsername);
