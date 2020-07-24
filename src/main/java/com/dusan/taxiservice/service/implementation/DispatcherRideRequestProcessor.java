@@ -2,6 +2,8 @@ package com.dusan.taxiservice.service.implementation;
 
 import java.time.LocalDateTime;
 
+import com.dusan.taxiservice.dto.response.RideResponse;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import com.dusan.taxiservice.dao.repository.DispatcherRepository;
@@ -30,9 +32,10 @@ class DispatcherRideRequestProcessor {
     private DriverRepository driverRepository;
     private VehicleTypeRepository vehicleTypeRepository;
     private DispatcherRepository dispatcherRepository;
+    private ConversionService conversionService;
     
     
-    public void formRide(String dispatcherUsername, String driverUsername, FormRideRequest formRideRequest) {
+    public RideResponse formRide(String dispatcherUsername, String driverUsername, FormRideRequest formRideRequest) {
         Driver driver = findDriver(driverUsername);
         checkDriverStatus(driver.getStatus().getId());
         long driverVehicleTypeId = driver.getVehicle().getId();
@@ -46,10 +49,11 @@ class DispatcherRideRequestProcessor {
         ride.setDispatcher(dispatcherRepository.getOne(dispatcherUsername));
         ride.setDriver(driver);
         ride.setRideStatus(rideStatusRepository.getOne(RideStatuses.FORMED.getId()));      
-        rideRepository.save(ride);
+        Ride formedRide = rideRepository.save(ride);
+        return conversionService.convert(formedRide, RideResponse.class);
     }
     
-    public void processRide(long rideId, String dispatcherUsername, String driverUsername) {
+    public RideResponse processRide(long rideId, String dispatcherUsername, String driverUsername) {
         Ride ride = findRide(rideId);     
         if (ride.getRideStatus().getId() != RideStatuses.CREATED.getId())
             throw new ConflictException("Ride not in created status");
@@ -62,20 +66,19 @@ class DispatcherRideRequestProcessor {
         ride.setDispatcher(dispatcherRepository.getOne(dispatcherUsername));
         ride.setDriver(driver);
         ride.setRideStatus(rideStatusRepository.getOne(RideStatuses.PROCESSED.getId()));
-        rideRepository.save(ride);
+        Ride processedRide = rideRepository.save(ride);
+        return conversionService.convert(processedRide, RideResponse.class);
     }
     
     private Ride findRide(long rideId) {
-        Ride ride = rideRepository.findById(rideId)
+        return rideRepository.findById(rideId)
                 .orElseThrow(() -> new ResourceNotFoundException("Ride not found"));
-        return ride;
     }
     
     private Driver findDriver(String driverUsername) {
-        Driver driver = driverRepository
+        return driverRepository
                 .findByUsernameFetchVehicle(driverUsername)
                 .orElseThrow(() -> new ResourceNotFoundException("Driver is not found"));
-        return driver;
     }
     
     private void checkDriverStatus(long statusId) {
