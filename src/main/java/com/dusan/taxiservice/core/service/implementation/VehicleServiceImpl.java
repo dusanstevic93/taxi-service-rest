@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class VehicleServiceImpl implements VehicleService {
+class VehicleServiceImpl implements VehicleService {
 
     private VehicleRepository vehicleRepository;
     private VehicleTypeRepository vehicleTypeRepository;
