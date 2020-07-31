@@ -17,6 +17,7 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
+                .nullDestMatcher().authenticated()
                 .simpSubscribeDestMatchers(
                         USER_PREFIX + QUEUE_PREFIX + ERROR,
                         TOPIC_PREFIX + CREATED_RIDE,
@@ -41,6 +42,5 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
                         APP_PREFIX + SUCCESSFUL_RIDE
                 ).hasRole("DRIVER")
                 .anyMessage().denyAll();
-
     }
 }
