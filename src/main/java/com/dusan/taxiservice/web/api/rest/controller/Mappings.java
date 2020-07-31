@@ -32,11 +32,6 @@ public class Mappings {
     public static final String UPDATE_RIDE = "/client/rides/{rideId}";
     public static final String CANCEL_RIDE = "/client/rides/{rideId}/status/cancel";
     public static final String RATE_RIDE = "/client/rides/{rideId}/rating";
-    public static final String FORM_RIDE = "/dispatcher/rides";
-    public static final String PROCESS_RIDE = "/dispatcher/rides/{rideId}";
-    public static final String ACCEPT_RIDE = "/driver/rides/{rideId}";
-    public static final String RIDE_STATUS_FAILED = "/driver/rides/{rideId}/status/failed";
-    public static final String RIDE_STATUS_SUCCESSFUL = "/driver/rides/{rideId}/status/successful";
     
     
     // vehicle controller
