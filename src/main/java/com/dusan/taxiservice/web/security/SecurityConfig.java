@@ -26,16 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         Mappings.VEHICLE_BASE_PATH + "/**",
                         Mappings.REGISTRATION_BASE_PATH + Mappings.REGISTER_DRIVER,
                         Mappings.DRIVER_BASE_PATH,
-                        Mappings.RETRIEVE_ALL_RIDES,
-                        Mappings.FORM_RIDE,
-                        Mappings.PROCESS_RIDE
+                        Mappings.RETRIEVE_ALL_RIDES
                 ).hasRole("DISPATCHER")
                 .antMatchers(
                         Mappings.DRIVER_BASE_PATH + "/**",
-                        Mappings.RETRIEVE_ALL_CREATED_RIDES,
-                        Mappings.ACCEPT_RIDE,
-                        Mappings.RIDE_STATUS_FAILED,
-                        Mappings.RIDE_STATUS_SUCCESSFUL
+                        Mappings.RETRIEVE_ALL_CREATED_RIDES
                 ).hasRole("DRIVER")
                 .antMatchers(
                         Mappings.CREATE_RIDE,
@@ -44,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         Mappings.RATE_RIDE,
                         Mappings.RIDE_COMMENT
                 ).hasRole("CLIENT")
-                .antMatchers(Mappings.RIDE_REPORT).hasAnyRole("DRIVER, DISPATCHER")
+                .antMatchers(Mappings.RIDE_REPORT, "/socket").hasAnyRole("DRIVER, DISPATCHER")
                 .antMatchers(
                         Mappings.PROFILE_BASE_PATH,
                         Mappings.RETRIEVE_USER_RIDES

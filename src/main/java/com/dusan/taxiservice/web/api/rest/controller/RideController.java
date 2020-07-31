@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import static com.dusan.taxiservice.web.api.websocket.SocketDestinations.*;
+
 @Tag(name = "Ride")
 @SecurityRequirement(name = OpenApiConfig.BEARER_TOKEN_SCHEME)
 @RestController
@@ -33,7 +36,7 @@ import javax.validation.constraints.Min;
 public class RideController {
 
     private RideService rideService;
-    //private SimpMessagingTemplate messagingTemplate;
+    private SimpMessagingTemplate messagingTemplate;
     
     @Operation(summary = "Retrieve user rides", description = Descriptions.RETRIEVE_USER_RIDES)
     @GetMapping(value = Mappings.RETRIEVE_USER_RIDES, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,6 +78,7 @@ public class RideController {
         BeanUtils.copyProperties(createRequest, createCommand);
         createCommand.setClientUsername(auth.getName());
         RideDto createdRide = rideService.createRide(createCommand);
+        messagingTemplate.convertAndSend(TOPIC_PREFIX + CREATED_RIDE, createdRide);
     }
     
     @Operation(summary = "Update ride", description = Descriptions.UPDATE_RIDE,
@@ -91,7 +95,8 @@ public class RideController {
         updateCommand.setClientUsername(auth.getName());
         updateCommand.setRideId(rideId);
         BeanUtils.copyProperties(updateRideRequest, updateCommand);
-        rideService.updateRide(updateCommand);
+        RideDto updatedRide = rideService.updateRide(updateCommand);
+        messagingTemplate.convertAndSend(TOPIC_PREFIX + UPDATED_RIDE, updatedRide);
     }
       
     @Operation(summary = "Cancel ride", description = Descriptions.CANCEL_RIDE,
@@ -103,7 +108,8 @@ public class RideController {
         CancelRideCommand cancelCommand = new CancelRideCommand();
         cancelCommand.setClientUsername(auth.getName());
         cancelCommand.setRideId(rideId);
-        rideService.cancelRide(cancelCommand);
+        RideDto canceledRide = rideService.cancelRide(cancelCommand);
+        messagingTemplate.convertAndSend(TOPIC_PREFIX + CANCELED_RIDE, canceledRide);
     }
     
     @Operation(summary = "Rate ride", description = Descriptions.RATE_RIDE,
@@ -120,69 +126,5 @@ public class RideController {
         rateCommand.setRideId(rideId);
         rateCommand.setRating(rating);
         rideService.rateRide(rateCommand);
-    }/*
-    
-    @Operation(summary = "Form ride", description = Descriptions.FORM_RIDE,
-            responses = {@ApiResponse(responseCode = "201", description = "Successful operation"),
-                         @ApiResponse(responseCode = "400", description = "Required field is invalid or missing"),
-                         @ApiResponse(responseCode = "404", description = "Driver not found"),
-                         @ApiResponse(responseCode = "409", description = "Driver is not available")})
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = Mappings.FORM_RIDE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void formRide(
-            @RequestParam("driver-username") String driver, 
-            @Valid @RequestBody FormRideRequest formRideRequest, 
-            Authentication auth) {
-        rideService.formRide(auth.getName(), driver, formRideRequest);
     }
-    
-    @Operation(summary = "Process ride", description = Descriptions.PROCESS_RIDE,
-            responses = {@ApiResponse(responseCode = "200", description = "Successful operation"),
-                         @ApiResponse(responseCode = "400", description = "Required field is invalid or missing"),
-                         @ApiResponse(responseCode = "404", description = "Driver not found"),
-                         @ApiResponse(responseCode = "409", description = "Driver is not available or ride is not in created status")})
-    @PutMapping(value = Mappings.PROCESS_RIDE)
-    public void processRide(
-            @PathVariable long rideId, 
-            @RequestParam("driver-username") String driver, 
-            Authentication auth) {
-        rideService.processRide(rideId, auth.getName(), driver);
-    }
-    // ?
-    @Operation(summary = "Accept ride", description = Descriptions.ACCEPT_RIDE,
-            responses = {@ApiResponse(responseCode = "200", description = "Successful operation"),
-                         @ApiResponse(responseCode = "404", description = "Ride is not found"),
-                         @ApiResponse(responseCode = "409", description = "Ride is not in created status")})
-    @PutMapping(value = Mappings.ACCEPT_RIDE)
-    public void acceptRide(
-            @PathVariable long rideId,
-            Authentication auth) {
-        rideService.acceptRide(rideId, auth.getName());
-    }
-    
-    @Operation(summary = "Set failed status", description = Descriptions.SET_FAILED_STATUS,
-            responses = {@ApiResponse(responseCode = "200", description = "Successful operation"),
-                         @ApiResponse(responseCode = "400", description = "Required field is invalid or missing"),
-                         @ApiResponse(responseCode = "404", description = "Ride is not found"),
-                         @ApiResponse(responseCode = "409", description = "Ride is not active")})
-    @PutMapping(value = Mappings.RIDE_STATUS_FAILED, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void setFailedStatus(
-            @PathVariable long rideId,
-            @Valid @RequestBody CreateReportRequest report,
-            Authentication auth) {
-        rideService.setFailedStatus(rideId, auth.getName(), report);
-    }
-    
-    @Operation(summary = "Set successful status", description = Descriptions.SET_SUCCESSFUL_STATUS,
-            responses = {@ApiResponse(responseCode = "200", description = "Successful operation"),
-                         @ApiResponse(responseCode = "400", description = "Required field is invalid or missing"),
-                         @ApiResponse(responseCode = "404", description = "Ride is not found"),
-                         @ApiResponse(responseCode = "409", description = "Ride is not active")})
-    @PutMapping(value = Mappings.RIDE_STATUS_SUCCESSFUL, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void setSuccessfulStatus(
-            @PathVariable long rideId,
-            @Valid @RequestBody SuccessfulRideRequest successfulRideRequest,
-            Authentication auth) {
-        rideService.setSuccessfulStatus(rideId, auth.getName(), successfulRideRequest);
-    }*/
 }
